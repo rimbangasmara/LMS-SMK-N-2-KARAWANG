@@ -15,10 +15,10 @@ const LoginPage = () => {
   useEffect(() => {
     const role = user?.publicMetadata.role;
 
-    if (role) {
-      router.push(`/${role}`);
-    }
-  }, [user, router]);
+  if (isSignedIn && role && typeof role === "string" && role !== "undefined") {
+    router.push(`/${role}`);
+  }
+}, [user, isSignedIn, router]);
 
   return (
     <div className="h-screen flex items-center justify-center bg-lamaSkyLight">
