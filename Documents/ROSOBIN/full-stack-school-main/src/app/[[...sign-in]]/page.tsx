@@ -12,12 +12,17 @@ const LoginPage = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    const role = user?.publicMetadata.role;
-
-  if (isSignedIn && role && typeof role === "string" && role !== "undefined") {
-    router.push(`/${role}`);
+useEffect(() => {
+  // Cek jika user sudah sign in dan role valid (bukan undefined/null/kosong)
+  const role = user?.publicMetadata?.role;
+if (isSignedIn && (!role || typeof role !== "string" || role === "undefined")) {
+  router.push("/unauthorized"); // atau Clerk.signOut();
+}
+  // Redirect ke halaman dashboard jika user sudah sign in
+  if (isLoaded && isSignedIn) {
+    router.push("/dashboard");
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [user, isSignedIn, router]);
 
   return (
